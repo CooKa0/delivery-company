@@ -10,4 +10,5 @@ public interface IVehicleService {
     void update(Vehicle vehicle);
     void delete(Long id);
     List<Vehicle> findAll();
+    List<Vehicle> findByCompanyId(Long companyId);
 }

@@ -1,4 +1,4 @@
-package com.solvd.laba.delivery.models;
+package com.solvd.laba.delivery.staxParser;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,6 @@ import java.sql.Timestamp;
 @Builder
 public class Invoice {
     private Long id;
-    private Long orderId;
-    private Timestamp invoiceDate;
     private double amount;
+    private Timestamp invoiceDate;
 }

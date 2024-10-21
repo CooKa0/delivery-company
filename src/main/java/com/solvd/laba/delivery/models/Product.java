@@ -5,15 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Invoice {
+public class Product {
     private Long id;
-    private Long orderId;
-    private Timestamp invoiceDate;
-    private double amount;
+    private String name;
+    private double price;
+    private List<Supplier> suppliers;
 }

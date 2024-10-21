@@ -48,9 +48,13 @@ public class VehicleDAOImpl implements IVehicleDAO {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new Vehicle(rs.getLong("id"), rs.getLong("company_id"),
-                        rs.getString("license_plate"), rs.getString("vehicle_type"),
-                        rs.getDouble("capacity"));
+                return Vehicle.builder()
+                        .id(rs.getLong("id"))
+                        .companyId(rs.getLong("company_id"))
+                        .licensePlate(rs.getString("license_plate"))
+                        .vehicleType(rs.getString("vehicle_type"))
+                        .capacity(rs.getDouble("capacity"))
+                        .build();
             }
         } catch (SQLException | InterruptedException e) {
             System.err.println("Failed to find vehicle by ID: " + id + " - " + e.getMessage());
@@ -109,9 +113,13 @@ public class VehicleDAOImpl implements IVehicleDAO {
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                vehicles.add(new Vehicle(rs.getLong("id"), rs.getLong("company_id"),
-                        rs.getString("license_plate"), rs.getString("vehicle_type"),
-                        rs.getDouble("capacity")));
+                vehicles.add(Vehicle.builder()
+                        .id(rs.getLong("id"))
+                        .companyId(rs.getLong("company_id"))
+                        .licensePlate(rs.getString("license_plate"))
+                        .vehicleType(rs.getString("vehicle_type"))
+                        .capacity(rs.getDouble("capacity"))
+                        .build());
             }
         } catch (SQLException | InterruptedException e) {
             System.err.println("Failed to retrieve vehicles - " + e.getMessage());
@@ -135,5 +143,30 @@ public class VehicleDAOImpl implements IVehicleDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<Vehicle> findByCompanyId(Long companyId) {
+        List<Vehicle> vehicles = new ArrayList<>();
+        String query = "SELECT * FROM vehicles WHERE company_id = ?";
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setLong(1, companyId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    vehicles.add(Vehicle.builder()
+                            .id(rs.getLong("id"))
+                            .companyId(rs.getLong("company_id"))
+                            .licensePlate(rs.getString("license_plate"))
+                            .vehicleType(rs.getString("vehicle_type"))
+                            .capacity(rs.getDouble("capacity"))
+                            .build());
+                }
+            }
+        } catch (SQLException | InterruptedException e) {
+            System.err.println("Failed to retrieve vehicles for company ID: " + companyId + " - " + e.getMessage());
+            e.printStackTrace();
+        }
+        return vehicles;
     }
 }

@@ -11,9 +11,11 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Invoice {
+public class Inventory {
     private Long id;
-    private Long orderId;
-    private Timestamp invoiceDate;
-    private double amount;
+    private Long warehouseId;
+    private Long productId;
+    private int quantity;
+    private Timestamp lastUpdated;
+    private Long companyId;
 }

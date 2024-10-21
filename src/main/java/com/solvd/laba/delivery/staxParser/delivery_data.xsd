@@ -1,0 +1,81 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="companies">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="company" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="location" type="xs:string"/>
+                            <xs:element name="createdAt" type="xs:dateTime"/>
+                            <xs:element name="customers" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="customer" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="companyId" type="xs:long"/>
+                                                    <xs:element name="firstName" type="xs:string"/>
+                                                    <xs:element name="lastName" type="xs:string"/>
+                                                    <xs:element name="email" type="xs:string"/>
+                                                    <xs:element name="phoneNumber" type="xs:string"/>
+                                                    <xs:element name="createdAt" type="xs:dateTime"/>
+                                                    <xs:element name="orders" minOccurs="0">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="order" maxOccurs="unbounded">
+                                                                    <xs:complexType>
+                                                                        <xs:sequence>
+                                                                            <xs:element name="customerId" type="xs:long"/>
+                                                                            <xs:element name="quantity" type="xs:int"/>
+                                                                            <xs:element name="totalPrice" type="xs:double"/>
+                                                                            <xs:element name="orderDate" type="xs:dateTime"/>
+                                                                            <xs:element name="invoice">
+                                                                                <xs:complexType>
+                                                                                    <xs:sequence>
+                                                                                        <xs:element name="amount" type="xs:double"/>
+                                                                                        <xs:element name="invoiceDate" type="xs:dateTime"/>
+                                                                                    </xs:sequence>
+                                                                                    <xs:attribute name="id" type="xs:long" use="required"/> <!-- Added invoice ID attribute -->
+                                                                                </xs:complexType>
+                                                                            </xs:element>
+                                                                        </xs:sequence>
+                                                                        <xs:attribute name="id" type="xs:long" use="required"/>
+                                                                    </xs:complexType>
+                                                                </xs:element>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute name="id" type="xs:long" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="vehicles" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="vehicle" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="licensePlate" type="xs:string"/>
+                                                    <xs:element name="vehicleType" type="xs:string"/>
+                                                    <xs:element name="capacity" type="xs:double"/>
+                                                </xs:sequence>
+                                                <xs:attribute name="id" type="xs:long" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:long" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

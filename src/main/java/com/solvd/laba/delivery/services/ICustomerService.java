@@ -11,4 +11,5 @@ public interface ICustomerService {
     void update(Customer customer);
     void delete(Long id);
     List<Customer> findAll();
+    List<Customer> findByCompanyId(Long companyId);
 }

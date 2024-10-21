@@ -129,6 +129,33 @@ public class CustomerDAOImpl implements ICustomerDAO {
                 customer.setPhoneNumber(rs.getString("phone_number"));
                 customer.setCreatedAt(rs.getTimestamp("created_at"));
                 customers.add(customer);
+
+            }
+        } catch (SQLException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return customers;
+    }
+
+    @Override
+    public List<Customer> findByCompanyId(Long companyId) {
+        List<Customer> customers = new ArrayList<>();
+        String query = "SELECT * FROM customers WHERE company_id = ?";
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setLong(1, companyId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Customer customer = new Customer();
+                    customer.setId(rs.getLong("id"));
+                    customer.setCompanyId(rs.getLong("company_id"));
+                    customer.setFirstName(rs.getString("first_name"));
+                    customer.setLastName(rs.getString("last_name"));
+                    customer.setEmail(rs.getString("email"));
+                    customer.setPhoneNumber(rs.getString("phone_number"));
+                    customer.setCreatedAt(rs.getTimestamp("created_at"));
+                    customers.add(customer);
+                }
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();

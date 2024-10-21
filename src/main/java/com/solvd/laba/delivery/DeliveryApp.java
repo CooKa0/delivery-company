@@ -28,19 +28,30 @@ import java.util.List;
 
 public class DeliveryApp {
     public static void main(String[] args) {
-        // Initialize DAO implementations
-        ICompanyService companyService = new CompanyServiceImpl(new CompanyDAOImpl());
-        ICustomerService customerService = new CustomerServiceImpl(new CustomerDAOImpl());
-        IOrderService orderService = new OrderServiceImpl(new OrderDAOImpl());
+
+        // Initialize implementations
         IInvoiceService invoiceService = new InvoiceServiceImpl(new InvoiceDAOImpl());
+        IOrderService orderService = new OrderServiceImpl(new OrderDAOImpl(), invoiceService);
+        ICustomerService customerService = new CustomerServiceImpl(new CustomerDAOImpl(), orderService);
         IVehicleService vehicleService = new VehicleServiceImpl(new VehicleDAOImpl());
+        ICompanyService companyService = new CompanyServiceImpl(new CompanyDAOImpl(), customerService, vehicleService);
 
         Connection conn = null;
 
         try {
             // Create new companies
-            Company company1 = new Company(null, "Tech Solutions", "New York", new Timestamp(System.currentTimeMillis()));
-            Company company2 = new Company(null, "Logistics Corp", "Los Angeles", new Timestamp(System.currentTimeMillis()));
+            Company company1 = Company.builder()
+                    .name("Tech Solutions")
+                    .location("New York")
+                    .createdAt(new Timestamp(System.currentTimeMillis()))
+                    .build();
+
+            Company company2 = Company.builder()
+                    .name("Logistics Corp")
+                    .location("Los Angeles")
+                    .createdAt(new Timestamp(System.currentTimeMillis()))
+                    .build();
+
             companyService.create(company1);
             companyService.create(company2);
 
@@ -50,31 +61,81 @@ public class DeliveryApp {
             // Check for existing customers or create new ones
             Customer customer1 = customerService.findByEmail("john.doe@example.com");
             if (customer1 == null) {
-                customer1 = new Customer(null, company1.getId(), "John", "Doe", "john.doe@example.com", "1234567890", new Timestamp(System.currentTimeMillis()));
+                customer1 = Customer.builder()
+                        .companyId(company1.getId())
+                        .firstName("John")
+                        .lastName("Doe")
+                        .email("john.doe@example.com")
+                        .phoneNumber("1234567890")
+                        .createdAt(new Timestamp(System.currentTimeMillis()))
+                        .build();
                 customerService.create(customer1);
             }
 
             Customer customer2 = customerService.findByEmail("jane.smith@example.com");
             if (customer2 == null) {
-                customer2 = new Customer(null, company1.getId(), "Jane", "Smith", "jane.smith@example.com", "0987654321", new Timestamp(System.currentTimeMillis()));
+                customer2 = Customer.builder()
+                        .companyId(company1.getId())
+                        .firstName("Jane")
+                        .lastName("Smith")
+                        .email("jane.smith@example.com")
+                        .phoneNumber("0987654321")
+                        .createdAt(new Timestamp(System.currentTimeMillis()))
+                        .build();
                 customerService.create(customer2);
             }
 
             // Create new orders
-            Order order1 = new Order(null, customer1.getId(), new Timestamp(System.currentTimeMillis()), 200.00);
-            Order order2 = new Order(null, customer2.getId(), new Timestamp(System.currentTimeMillis()), 150.00);
+            Order order1 = Order.builder()
+                    .customerId(customer1.getId())
+                    .companyId(customer1.getCompanyId())
+                    .orderDate(new Timestamp(System.currentTimeMillis()))
+                    .totalPrice(200.00)
+                    .quantity(2)
+                    .build();
+
+            Order order2 = Order.builder()
+                    .customerId(customer2.getId())
+                    .companyId(customer2.getCompanyId())
+                    .orderDate(new Timestamp(System.currentTimeMillis()))
+                    .totalPrice(150.00)
+                    .quantity(1)
+                    .build();
+
             orderService.create(order1);
             orderService.create(order2);
 
+
             // Create new invoices for the orders
-            Invoice invoice1 = new Invoice(null, order1.getId(), new Timestamp(System.currentTimeMillis()), 200.00);
-            Invoice invoice2 = new Invoice(null, order2.getId(), new Timestamp(System.currentTimeMillis()), 150.00);
+            Invoice invoice1 = Invoice.builder()
+                    .orderId(order1.getId())
+                    .invoiceDate(new Timestamp(System.currentTimeMillis()))
+                    .amount(200.00)
+                    .build();
+
+            Invoice invoice2 = Invoice.builder()
+                    .orderId(order2.getId())
+                    .invoiceDate(new Timestamp(System.currentTimeMillis()))
+                    .amount(150.00)
+                    .build();
+
             invoiceService.create(invoice1);
             invoiceService.create(invoice2);
 
             // Create new vehicles for the companies
-            Vehicle vehicle1 = new Vehicle(null, company1.getId(), "ABC-124", "Truck", 1000.0);
-            Vehicle vehicle2 = new Vehicle(null, company2.getId(), "XYZ-567", "Van", 800.0);
+            Vehicle vehicle1 = Vehicle.builder()
+                    .companyId(company1.getId())
+                    .licensePlate("ABC-128")
+                    .vehicleType("Truck")
+                    .capacity(1000.0)
+                    .build();
+
+            Vehicle vehicle2 = Vehicle.builder()
+                    .companyId(company2.getId())
+                    .licensePlate("XYZ-568")
+                    .vehicleType("Van")
+                    .capacity(800.0)
+                    .build();
 
             vehicleService.create(vehicle1);
             System.out.println("Vehicle created: " + vehicle1);

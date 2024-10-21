@@ -13,12 +13,14 @@ public class OrderDAOImpl implements IOrderDAO {
 
     @Override
     public void create(Order order) {
-        String query = "INSERT INTO orders (customer_id, order_date, total_price) VALUES (?, ?, ?)";
+        String query = "INSERT INTO orders (customer_id, company_id, order_date, quantity, total_price) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = connectionPool.getConnection();
              PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             ps.setLong(1, order.getCustomerId());
-            ps.setTimestamp(2, order.getOrderDate());
-            ps.setDouble(3, order.getTotalPrice());
+            ps.setLong(2, order.getCompanyId());
+            ps.setTimestamp(3, order.getOrderDate());
+            ps.setInt(4, order.getQuantity());
+            ps.setDouble(5, order.getTotalPrice());
             ps.executeUpdate();
 
             // Retrieve the generated Order ID
@@ -40,10 +42,12 @@ public class OrderDAOImpl implements IOrderDAO {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new Order(rs.getLong("id"),
-                        rs.getLong("customer_id"),
-                        rs.getTimestamp("order_date"),
-                        rs.getDouble("total_price"));
+                return Order.builder()
+                        .id(rs.getLong("id"))
+                        .customerId(rs.getLong("customer_id"))
+                        .orderDate(rs.getTimestamp("order_date"))
+                        .totalPrice(rs.getDouble("total_price"))
+                        .build();
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
@@ -86,10 +90,38 @@ public class OrderDAOImpl implements IOrderDAO {
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                orders.add(new Order(rs.getLong("id"),
-                        rs.getLong("customer_id"),
-                        rs.getTimestamp("order_date"),
-                        rs.getDouble("total_price")));
+                orders.add(Order.builder()
+                        .id(rs.getLong("id"))
+                        .customerId(rs.getLong("customer_id"))
+                        .orderDate(rs.getTimestamp("order_date"))
+                        .totalPrice(rs.getDouble("total_price"))
+                        .build());
+            }
+        } catch (SQLException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> findByCustomerId(Long customerId) {
+        List<Order> orders = new ArrayList<>();
+        String query = "SELECT * FROM orders WHERE customer_id = ?";
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setLong(1, customerId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                orders.add(Order.builder()
+                        .id(rs.getLong("id"))
+                        .customerId(rs.getLong("customer_id"))
+                        .companyId(rs.getLong("company_id"))
+                        .orderDate(rs.getTimestamp("order_date"))
+                        .quantity(rs.getInt("quantity"))
+                        .totalPrice(rs.getDouble("total_price"))
+                        .build());
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();

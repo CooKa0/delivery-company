@@ -10,4 +10,5 @@ public interface IInvoiceService {
     void update(Invoice invoice);
     void delete(Long id);
     List<Invoice> findAll();
+    Invoice findByOrderId(Long orderId);
 }

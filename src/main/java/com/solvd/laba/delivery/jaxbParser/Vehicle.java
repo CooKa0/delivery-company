@@ -1,21 +1,30 @@
-package com.solvd.laba.delivery.models;
+package com.solvd.laba.delivery.jaxbParser;
 
+import jakarta.xml.bind.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Vehicle {
+
+    @XmlElement
     private Long id;
+
+    @XmlElement
     private Long companyId;
+
+    @XmlElement
     private String licensePlate;
+
+    @XmlElement
     private String vehicleType;
-    private double capacity;
-    private List<MaintenanceRecord> maintenanceRecords;
+
+    @XmlElement
+    private Double capacity;
 }

@@ -1,4 +1,5 @@
-package com.solvd.laba.delivery.models;
+package com.solvd.laba.delivery.staxParser;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,5 @@ public class Company {
     private String location;
     private Timestamp createdAt;
     private List<Customer> customers;
-    private List<Employee> employees;
     private List<Vehicle> vehicles;
-    private List<Warehouse> warehouses;
 }

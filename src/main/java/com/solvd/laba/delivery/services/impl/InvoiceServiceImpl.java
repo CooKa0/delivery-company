@@ -37,4 +37,9 @@ public class InvoiceServiceImpl implements IInvoiceService {
     public List<Invoice> findAll() {
         return invoiceDAO.findAll();
     }
+
+    @Override
+    public Invoice findByOrderId(Long orderId) {
+        return invoiceDAO.findByOrderId(orderId);
+    }
 }

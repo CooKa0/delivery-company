@@ -37,4 +37,9 @@ public class VehicleServiceImpl implements IVehicleService {
     public List<Vehicle> findAll() {
         return vehicleDAO.findAll();
     }
+
+    @Override
+    public List<Vehicle> findByCompanyId(Long companyId) {
+        return vehicleDAO.findByCompanyId(companyId);
+    }
 }

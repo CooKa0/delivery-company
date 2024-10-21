@@ -19,13 +19,27 @@ public class InvoiceDAOImpl implements IInvoiceDAO {
 
         String query = "INSERT INTO invoices (order_id, invoice_date, amount) VALUES (?, ?, ?)";
         try (Connection conn = connectionPool.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             ps.setLong(1, invoice.getOrderId());
             ps.setTimestamp(2, invoice.getInvoiceDate());
             ps.setDouble(3, invoice.getAmount());
-            ps.executeUpdate();
+
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating invoice failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    invoice.setId(generatedKeys.getLong(1));
+                } else {
+                    throw new SQLException("Creating invoice failed, no ID obtained.");
+                }
+            }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
+            throw new RuntimeException("Error creating invoice: " + e.getMessage());
         }
     }
 
@@ -88,5 +102,25 @@ public class InvoiceDAOImpl implements IInvoiceDAO {
             e.printStackTrace();
         }
         return invoices;
+    }
+
+    @Override
+    public Invoice findByOrderId(Long orderId) {
+        Invoice invoice = null;
+        String query = "SELECT * FROM invoices WHERE order_id = ?";
+
+        try (Connection conn = connectionPool.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setLong(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                invoice = new Invoice(rs.getLong("id"), rs.getLong("order_id"),
+                        rs.getTimestamp("invoice_date"), rs.getDouble("amount"));
+            }
+        } catch (SQLException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return invoice;
     }
 }

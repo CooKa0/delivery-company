@@ -11,9 +11,10 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Invoice {
+public class MaintenanceRecord {
     private Long id;
-    private Long orderId;
-    private Timestamp invoiceDate;
-    private double amount;
+    private Long vehicleId;
+    private String description;
+    private Timestamp maintenanceDate;
+    private double cost;
 }

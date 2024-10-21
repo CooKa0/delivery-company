@@ -1,4 +1,4 @@
-package com.solvd.laba.delivery.models;
+package com.solvd.laba.delivery.staxParser;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +16,5 @@ public class Vehicle {
     private Long companyId;
     private String licensePlate;
     private String vehicleType;
-    private double capacity;
-    private List<MaintenanceRecord> maintenanceRecords;
+    private Double capacity;
 }

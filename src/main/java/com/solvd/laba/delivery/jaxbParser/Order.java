@@ -1,22 +1,35 @@
-package com.solvd.laba.delivery.models;
+package com.solvd.laba.delivery.jaxbParser;
 
+import jakarta.xml.bind.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Order {
+
+    @XmlElement
     private Long id;
+
+    @XmlElement
     private Long customerId;
-    private Long companyId;
-    private Timestamp orderDate;
+
+    @XmlElement
     private int quantity;
+
+    @XmlElement
     private double totalPrice;
+
+    @XmlElement
+    private Date orderDate;
+
+    @XmlElement
     private Invoice invoice;
 }

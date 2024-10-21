@@ -1,5 +1,6 @@
-package com.solvd.laba.delivery.models;
+package com.solvd.laba.delivery.staxParser;
 
+import com.solvd.laba.delivery.staxParser.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

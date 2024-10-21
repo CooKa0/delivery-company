@@ -38,10 +38,15 @@ public class CompanyDAOImpl implements ICompanyDAO {
         try (Connection conn = connectionPool.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setLong(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Company(rs.getLong("id"), rs.getString("name"),
-                        rs.getString("location"), rs.getTimestamp("created_at"));
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return Company.builder()
+                            .id(rs.getLong("id"))
+                            .name(rs.getString("name"))
+                            .location(rs.getString("location"))
+                            .createdAt(rs.getTimestamp("created_at"))
+                            .build();
+                }
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
@@ -84,8 +89,12 @@ public class CompanyDAOImpl implements ICompanyDAO {
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                companies.add(new Company(rs.getLong("id"), rs.getString("name"),
-                        rs.getString("location"), rs.getTimestamp("created_at")));
+                companies.add(Company.builder()
+                        .id(rs.getLong("id"))
+                        .name(rs.getString("name"))
+                        .location(rs.getString("location"))
+                        .createdAt(rs.getTimestamp("created_at"))
+                        .build());
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();

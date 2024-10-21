@@ -6,14 +6,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Invoice {
+public class Employee {
     private Long id;
-    private Long orderId;
-    private Timestamp invoiceDate;
-    private double amount;
+    private Long companyId;
+    private String firstName;
+    private String lastName;
+    private String role;
+    private Timestamp hireDate;
+    private List<Delivery> deliveries;
 }
