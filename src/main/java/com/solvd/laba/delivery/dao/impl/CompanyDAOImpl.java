@@ -99,7 +99,7 @@ public class CompanyDAOImpl implements ICompanyDAO {
                 + "cu.created_at AS customer_created_at, "
                 + "v.id AS vehicle_id, v.license_plate AS vehicle_license_plate, "
                 + "v.vehicle_type AS vehicle_type, v.capacity AS vehicle_capacity, "
-                + "o.id AS order_id, o.order_date AS order_date, o.quantity AS quantity, " // Added quantity
+                + "o.id AS order_id, o.order_date AS order_date, o.quantity AS quantity, "
                 + "o.total_price AS order_total_price, "
                 + "i.id AS invoice_id, i.invoice_date AS invoice_date, i.amount AS invoice_amount "
                 + "FROM companies c "
