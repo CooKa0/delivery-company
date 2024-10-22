@@ -55,4 +55,9 @@ public class CompanyServiceImpl implements ICompanyService {
 
         return companies;
     }
+
+    @Override
+    public Company findCompanyDetails(Long companyId) {
+        return companyDAO.findCompanyDetails(companyId);
+    }
 }

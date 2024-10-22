@@ -142,10 +142,10 @@ public class DeliveryApp {
             vehicleService.create(vehicle2);
             System.out.println("Vehicle created: " + vehicle2);
 
-            // Retrieve and print all companies
-            List<Company> companies = companyService.findAll();
-            System.out.println("Companies:");
-            companies.forEach(System.out::println);
+//            // Retrieve and print all companies
+//            List<Company> companies = companyService.findAll();
+//            System.out.println("Companies:");
+//            companies.forEach(System.out::println);
 
             // Retrieve and print all customers
             List<Customer> customers = customerService.findAll();
@@ -166,6 +166,18 @@ public class DeliveryApp {
             List<Vehicle> vehicles = vehicleService.findAll();
             System.out.println("Vehicles:");
             vehicles.forEach(System.out::println);
+
+            // Retrieve and print company details for a specific company
+            Long companyIdToCheck = company1.getId();
+            Company companyDetails = companyService.findCompanyDetails(companyIdToCheck);
+            System.out.println("Company Details for company ID " + companyIdToCheck + ":");
+            System.out.println(companyDetails);
+
+            // Retrieve and print all companies
+            List<Company> companies = companyService.findAll();
+            System.out.println("Companies:");
+            companies.forEach(System.out::println);
+
         } catch (Exception e) {
             System.err.println("Exception occurred: " + e.getMessage());
         } finally {

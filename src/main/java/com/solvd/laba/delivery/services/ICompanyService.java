@@ -10,4 +10,5 @@ public interface ICompanyService {
     void update(Company company);
     void delete(Long id);
     List<Company> findAll();
+    Company findCompanyDetails(Long companyId);
 }
