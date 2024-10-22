@@ -1,157 +1,83 @@
-<companies>
-    <company id="1">
-        <name>Tech Solutions</name>
-        <location>New York</location>
-        <createdAt>2023-10-21T10:00:00</createdAt>
-
-        <customers>
-            <customer id="1">
-                <companyId>1</companyId>
-                <firstName>John</firstName>
-                <lastName>Doe</lastName>
-                <email>john.doe@example.com</email>
-                <phoneNumber>123-456-7890</phoneNumber>
-                <createdAt>2023-10-21T10:00:00</createdAt>
-
-                <orders>
-                    <order id="1">
-                        <customerId>1</customerId>
-                        <quantity>2</quantity>
-                        <totalPrice>100.00</totalPrice>
-                        <orderDate>2023-10-21T10:00:00</orderDate>
-
-                        <invoice id="1">
-                            <amount>100.00</amount>
-                            <invoiceDate>2023-10-21T10:00:00</invoiceDate>
-                        </invoice>
-                    </order>
-                    <order id="2">
-                        <customerId>1</customerId>
-                        <quantity>1</quantity>
-                        <totalPrice>50.00</totalPrice>
-                        <orderDate>2023-10-22T11:00:00</orderDate>
-
-                        <invoice id="2">
-                            <amount>50.00</amount>
-                            <invoiceDate>2023-10-22T11:00:00</invoiceDate>
-                        </invoice>
-                    </order>
-                </orders>
-            </customer>
-            <customer id="2">
-                <companyId>1</companyId>
-                <firstName>Jane</firstName>
-                <lastName>Smith</lastName>
-                <email>jane.smith@example.com</email>
-                <phoneNumber>987-654-3210</phoneNumber>
-                <createdAt>2023-10-21T10:00:00</createdAt>
-
-                <orders>
-                    <order id="3">
-                        <customerId>2</customerId>
-                        <quantity>5</quantity>
-                        <totalPrice>250.00</totalPrice>
-                        <orderDate>2023-10-23T12:00:00</orderDate>
-
-                        <invoice id="3">
-                            <amount>250.00</amount>
-                            <invoiceDate>2023-10-23T12:00:00</invoiceDate>
-                        </invoice>
-                    </order>
-                </orders>
-            </customer>
-        </customers>
-
-        <vehicles>
-            <vehicle id="1">
-                <licensePlate>ABC123</licensePlate>
-                <vehicleType>Truck</vehicleType>
-                <capacity>1000.00</capacity>
-            </vehicle>
-            <vehicle id="2">
-                <licensePlate>XYZ789</licensePlate>
-                <vehicleType>Van</vehicleType>
-                <capacity>800.00</capacity>
-            </vehicle>
-        </vehicles>
-    </company>
-
-    <company id="2">
-        <name>Innovate Corp</name>
-        <location>Los Angeles</location>
-        <createdAt>2023-10-21T10:00:00</createdAt>
-
-        <customers>
-            <customer id="3">
-                <companyId>2</companyId>
-                <firstName>Alice</firstName>
-                <lastName>Johnson</lastName>
-                <email>alice.johnson@example.com</email>
-                <phoneNumber>555-123-4567</phoneNumber>
-                <createdAt>2023-10-21T10:00:00</createdAt>
-
-                <orders>
-                    <order id="4">
-                        <customerId>3</customerId>
-                        <quantity>3</quantity>
-                        <totalPrice>150.00</totalPrice>
-                        <orderDate>2023-10-24T10:00:00</orderDate>
-
-                        <invoice id="4">
-                            <amount>150.00</amount>
-                            <invoiceDate>2023-10-24T10:00:00</invoiceDate>
-                        </invoice>
-                    </order>
-                </orders>
-            </customer>
-        </customers>
-
-        <vehicles>
-            <vehicle id="3">
-                <licensePlate>LMN456</licensePlate>
-                <vehicleType>SUV</vehicleType>
-                <capacity>1200.00</capacity>
-            </vehicle>
-        </vehicles>
-    </company>
-
-    <company id="3">
-        <name>Global Enterprises</name>
-        <location>Chicago</location>
-        <createdAt>2023-10-21T10:00:00</createdAt>
-
-        <customers>
-            <customer id="4">
-                <companyId>3</companyId>
-                <firstName>Michael</firstName>
-                <lastName>Brown</lastName>
-                <email>michael.brown@example.com</email>
-                <phoneNumber>555-765-4321</phoneNumber>
-                <createdAt>2023-10-21T10:00:00</createdAt>
-
-                <orders>
-                    <order id="5">
-                        <customerId>4</customerId>
-                        <quantity>4</quantity>
-                        <totalPrice>200.00</totalPrice>
-                        <orderDate>2023-10-25T10:00:00</orderDate>
-
-                        <invoice id="5">
-                            <amount>200.00</amount>
-                            <invoiceDate>2023-10-25T10:00:00</invoiceDate>
-                        </invoice>
-                    </order>
-                </orders>
-            </customer>
-        </customers>
-
-        <vehicles>
-            <vehicle id="4">
-                <licensePlate>UVW321</licensePlate>
-                <vehicleType>Pickup</vehicleType>
-                <capacity>900.00</capacity>
-            </vehicle>
-        </vehicles>
-    </company>
-</companies>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<company>
+    <id>1</id>
+    <name>Tech Solutions</name>
+    <location>New York</location>
+    <createdAt>2023-10-21T10:00:00</createdAt>
+    <customers>
+        <customer>
+            <id>1</id>
+            <companyId>1</companyId>
+            <firstName>John</firstName>
+            <lastName>Doe</lastName>
+            <email>john.doe@example.com</email>
+            <phoneNumber>123-456-7890</phoneNumber>
+            <createdAt>2023-10-21T10:00:00</createdAt>
+            <orders>
+                <order>
+                    <id>1</id>
+                    <customerId>1</customerId>
+                    <orderDate>2023-10-21T10:00:00</orderDate>
+                    <quantity>2</quantity>
+                    <totalPrice>100.0</totalPrice>
+                    <invoice>
+                        <id>1</id>
+                        <invoiceDate>2023-10-21T10:00:00</invoiceDate>
+                        <amount>100.0</amount>
+                    </invoice>
+                </order>
+                <order>
+                    <id>2</id>
+                    <customerId>1</customerId>
+                    <orderDate>2023-10-22T11:00:00</orderDate>
+                    <quantity>1</quantity>
+                    <totalPrice>50.0</totalPrice>
+                    <invoice>
+                        <id>2</id>
+                        <invoiceDate>2023-10-22T11:00:00</invoiceDate>
+                        <amount>50.0</amount>
+                    </invoice>
+                </order>
+            </orders>
+        </customer>
+        <customer>
+            <id>2</id>
+            <companyId>1</companyId>
+            <firstName>Jane</firstName>
+            <lastName>Smith</lastName>
+            <email>jane.smith@example.com</email>
+            <phoneNumber>987-654-3210</phoneNumber>
+            <createdAt>2023-10-21T10:00:00</createdAt>
+            <orders>
+                <order>
+                    <id>3</id>
+                    <customerId>2</customerId>
+                    <orderDate>2023-10-23T09:30:00</orderDate>
+                    <quantity>5</quantity>
+                    <totalPrice>250.0</totalPrice>
+                    <invoice>
+                        <id>3</id>
+                        <invoiceDate>2023-10-23T09:30:00</invoiceDate>
+                        <amount>250.0</amount>
+                    </invoice>
+                </order>
+            </orders>
+        </customer>
+    </customers>
+    <vehicles>
+        <vehicle>
+            <id>1</id>
+            <companyId>1</companyId>
+            <licensePlate>ABC123</licensePlate>
+            <vehicleType>Truck</vehicleType>
+            <capacity>1000.0</capacity>
+        </vehicle>
+        <vehicle>
+            <id>2</id>
+            <companyId>1</companyId>
+            <licensePlate>XYZ-789</licensePlate>
+            <vehicleType>Van</vehicleType>
+            <capacity>800.0</capacity>
+        </vehicle>
+    </vehicles>
+</company>
